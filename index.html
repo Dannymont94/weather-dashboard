@@ -7,7 +7,41 @@
     <title>Weather Dashboard</title>
 </head>
 <body>
-    
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main>
+        <section class="search-container">
+            <form id="city-search-form">
+                <label for="city-search" id="city-search-label">Search for a City:</label>
+                <input type="text" id="city-search-input" />
+                <button type="submit" id="city-search-btn">Search</button>
+            </form>
+            <div>
+                <ul id="past-searches-list"></ul>
+            </div>
+        </section>
+        <section id="forecast-container">
+            <div id="current-forecast-container">
+                <h2 id="city-and-date"></h2>
+                <h3 id="current-forecast"></h3>
+                <p id="current-temp"></p>
+                <p id="current-humidity"></p>
+                <p id="current-wind-speed"></p>
+                <p id="current-uv-index"></p>
+            </div>
+            <div id="future-forecast-container">
+                <h2>5-Day Forecast:</h2>
+                <div>
+                    <div id="future-forecast-1" class="future-forecast"></div>
+                    <div id="future-forecast-2" class="future-forecast"></div>
+                    <div id="future-forecast-3" class="future-forecast"></div>
+                    <div id="future-forecast-4" class="future-forecast"></div>
+                    <div id="future-forecast-5" class="future-forecast"></div>
+                </div>
+            </div>
+        </section>
+    </main>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>

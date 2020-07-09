@@ -33,6 +33,7 @@ function getWeatherData(cityName, lat, lon) {
         });
 }
 
+// render all the data from previous functions onto the page
 function renderWeatherData(cityName, current, daily) {
     // current weather data info needed: city name, date, forecast icon, temp, humidity, wind speed, and uv index
     console.log(
@@ -72,8 +73,6 @@ function capitalizeWords(string) {
         return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
     });
 }
-
-// render all the data from previous functions onto the page
 
 // when a city is searched, save in localStorage and add to search history
 
