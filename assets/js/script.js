@@ -5,8 +5,6 @@ function getLocationData(searchTerm) {
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
-                    console.log(data);
-                    console.log(data.name, data.coord.lat, data.coord.lon);
                     getWeatherData(data.name, data.coord.lat, data.coord.lon);
                 });
             } else {
@@ -24,32 +22,29 @@ function getWeatherData(cityName, lat, lon) {
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function({current, daily}) {
-                    console.log(current);
-                    // get dates
-                    var currentDate = getFormattedDate(current.dt);
                     // current weather data info needed: city name, date, forecast icon, temp, humidity, wind speed, and uv index
                     console.log(
-                        "CURRENT" + "\n" + 
+                        "Today" + "\n" + 
                         "City Name: " + cityName + "\n" + 
-                        "Today's Date: " + currentDate + "\n" + 
-                        "Forecast: " + current.weather[0].main + "\n" + 
-                        "Forecast Icon: " + current.weather[0].icon + "\n" +
+                        "Today's Date: " + convertDate(current.dt) + "\n" + 
+                        "Forecast: " + capitalizeWords(current.weather[0].description) + "\n" + 
+                        "Forecast Icon URL: " + getIconUrl(current.weather[0].icon) + "\n" +
                         "Temperature: " + current.temp + String.fromCharCode(176) + "F" + "\n" + 
                         "Humidity: " + current.humidity + "%" + "\n" + 
                         "Wind Speed: " + current.wind_speed + " MPH" + "\n" + 
                         "UV Index: " + current.uvi
                         );
-                    
-                    console.log(daily);
                     // future weather data starts at daily[1]. info needed: date, forecast icon, temp, humidity
-                    console.log(
-                        "FUTURE" + "\n" + 
-                        "Tomorrow's Date: " + getFormattedDate(daily[1].dt) + "\n" + 
-                        "Forecast: " + "" + "\n" + 
-                        "Forecast Icon: " + "" + "\n" + 
-                        "Temperature: " + "" + "\n" + 
-                        "Humidity: " + "" + "\n"
-                    );
+                    for (let i = 1; i < 6; i++) {
+                        console.log(
+                            [i] + " day(s) in the future" + "\n" + 
+                            "Date: " + convertDate(daily[i].dt) + "\n" + 
+                            "Forecast: " + capitalizeWords(daily[i].weather[0].description) + "\n" + 
+                            "Forecast Icon: " + getIconUrl(daily[i].weather[0].icon) + "\n" + 
+                            "Temperature: " + daily[i].temp.day + String.fromCharCode(176) + "F" + "\n" + 
+                            "Humidity: " + daily[i].humidity + "%" + "\n"
+                        );
+                    }
                 });
             } else {
                 console.log("(Error: " + response.statusText + ")");
@@ -60,8 +55,18 @@ function getWeatherData(cityName, lat, lon) {
         });
 }
 
-function getFormattedDate(timestamp) {
+function convertDate(timestamp) {
     return (new Date(timestamp * 1000)).toLocaleString().split(",")[0];
+}
+
+function getIconUrl(iconCode){
+    return "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+}
+
+function capitalizeWords(string) {
+    return string.replace(/\w\S*/g, function(text){
+        return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+    });
 }
 
 // render all the data from previous functions onto the page
@@ -70,4 +75,4 @@ function getFormattedDate(timestamp) {
 
 // when page is loaded, turn city names in local storage into clickable elements that load data into the dashboard
 
-getLocationData("Atlanta");
+getLocationData("Miami");
