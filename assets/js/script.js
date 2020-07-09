@@ -1,3 +1,13 @@
+var cityAndDateEl = document.querySelector("#city-and-date");
+var currentForecastEl = document.querySelector("#current-forecast");
+var currentForecastIconEl = document.querySelector("#current-forecast-icon");
+var currentTempEl = document.querySelector("#current-temp");
+var currentHumidityEl = document.querySelector("#current-humidity");
+var currentWindSpeedEl = document.querySelector("#current-wind-speed");
+var currentUviEl = document.querySelector("#current-uvi");
+var futureForecastContainerEl = document.querySelector("#future-forecast-container");
+
+
 // get location data for city searched by user
 function getLocationData(searchTerm) {
     var currentApiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm + "&units=imperial&appid=d6c7088748687d06d3775770026215e2";
@@ -39,20 +49,49 @@ function renderWeatherData(cityName, current, daily) {
     var currentDate = convertDate(current.dt);
     var currentForecast = capitalizeWords(current.weather[0].description);
     var currentForecastIcon = getIconUrl(current.weather[0].icon);
-    var currentTemperature = current.temp + String.fromCharCode(176) + "F";
+    var currentTemp = current.temp + String.fromCharCode(176) + "F";
     var currentHumidity = current.humidity + "%";
     var currentWindSpeed = current.wind_speed + " MPH";
     var currentUvi = current.uvi;
-    console.log(cityName, currentDate, currentForecast, currentForecastIcon, currentTemperature, currentHumidity, currentWindSpeed, currentUvi);
+    
+    cityAndDateEl.textContent = cityName + " (" + currentDate + ")";
+    currentForecastEl.textContent = "Forecast: " + currentForecast;
+    currentForecastIconEl.setAttribute("src", currentForecastIcon);
+    currentTempEl.textContent = "Temperature: " + currentTemp;
+    currentHumidityEl.textContent = "Humidity: " + currentHumidity;
+    currentWindSpeedEl.textContent = "Wind Speed: " + currentWindSpeed;
+    currentUviEl.textContent = "UV Index: " + currentUvi;
 
-    // future weather data starts at daily[1]. info needed: date, forecast icon, temp, humidity
+
+    // future weather data starts at daily[1] and only need 5 days of info. info needed: date, forecast icon, temp, humidity
     for (let i = 1; i < 6; i++) {
+        var futureForecastDivEl = document.createElement("div");
+        futureForecastDivEl.classList.add("future-forecast");
+
         var futureDate = convertDate(daily[i].dt);
         var futureForecast = capitalizeWords(daily[i].weather[0].description);
         var futureForecastIcon = getIconUrl(daily[i].weather[0].icon);
         var futureTemp = daily[i].temp.day + String.fromCharCode(176) + "F";
         var futureHumidity = daily[i].humidity + "%";
-        console.log(futureDate, futureForecast, futureForecastIcon, futureTemp, futureHumidity);
+
+        var futureDateEl = document.createElement("h3");
+        futureDateEl.textContent = futureDate;
+        futureForecastDivEl.appendChild(futureDateEl);
+
+        var futureForecastIconEl = document.createElement("img");
+        futureForecastIconEl.setAttribute("src", futureForecastIcon);
+        futureForecastDivEl.appendChild(futureForecastIconEl);
+
+        var futureTempEl = document.createElement("p");
+        futureTempEl.textContent = "Temp: " + futureTemp;
+        futureForecastDivEl.appendChild(futureTempEl);
+
+        var futureHumidityEl = document.createElement("p");
+        futureHumidityEl.textContent = "Humidity: " + futureHumidity;
+        futureForecastDivEl.appendChild(futureHumidityEl);
+
+        futureForecastContainerEl.appendChild(futureForecastDivEl);
+
     }
 }
 
