@@ -1,5 +1,6 @@
 var citySearchFormEl = document.querySelector("#city-search-form");
 var citySearchInputEl = document.querySelector("#city-search-input");
+var searchHistoryListEl = document.querySelector("#city-search-history");
 var cityAndDateEl = document.querySelector("#city-and-date");
 var currentForecastEl = document.querySelector("#current-forecast");
 var currentForecastIconEl = document.querySelector("#current-forecast-icon");
@@ -12,6 +13,7 @@ var futureForecastContainerEl = document.querySelector("#future-forecast-contain
 function formSubmitHandler(event) {
     event.preventDefault();
     var searchTerm = citySearchInputEl.value.trim();
+    citySearchFormEl.reset();
     getLocationData(searchTerm);
 }
 
@@ -22,6 +24,7 @@ function getLocationData(searchTerm) {
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
+                    saveSearchHistory(data.name);
                     getWeatherData(data.name, data.coord.lat, data.coord.lon);
                 });
             } else {
@@ -113,7 +116,15 @@ function capitalizeWords(string) {
     });
 }
 
-// when a city is searched, save in localStorage and add to search history
+// when a city is searched, save in localStorage and add to search history. search history holds up to 10 city names.
+function saveSearchHistory(cityName) {
+    var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+    searchHistory.push(cityName);
+    if (searchHistory.length > 10) {
+        searchHistory = searchHistory.slice(1, 11);
+    }
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+}
 
 // when page is loaded, turn city names in local storage into clickable elements that load data into the dashboard
 
