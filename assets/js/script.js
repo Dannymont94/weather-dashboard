@@ -76,7 +76,7 @@ function renderWeatherData(cityName, current, daily) {
     currentWindSpeedEl.textContent = "Wind Speed: " + currentWindSpeed;
     currentUviEl.textContent = "UV Index: " + currentUvi;
 
-    // future weather data starts at daily[1] and only need 5 days of info. info needed: date, forecast icon, temp, humidity
+    // future weather data starts at daily[1]. dashboard only loads 5 days of info. info needed: date, forecast icon, temp, humidity
     futureForecastContainerEl.innerHTML = "";
     for (let i = 1; i < 6; i++) {
         var futureForecastDivEl = document.createElement("div");
@@ -115,13 +115,14 @@ function getIconUrl(iconCode){
     return "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
 }
 
+// capitalizes the first letter of each word in a string
 function capitalizeWords(string) {
     return string.replace(/\w\S*/g, function(text){
         return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
     });
 }
 
-// when a city is searched, save in localStorage and add to search history. search history holds up to 10 city names.
+// when a city is searched, save in localStorage and add to search history. search history filters out duplicates and holds up to 10 city names.
 function saveSearchHistory(cityName) {
     var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
     searchHistory.push(cityName);
@@ -135,7 +136,7 @@ function saveSearchHistory(cityName) {
     loadSearchHistory();
 }
 
-// when page is loaded, turn city names in local storage into clickable elements that load data into the dashboard
+// when page is loaded or new city is added to searchHistory, turn searchHistory from localStorage into clickable <li> elements that load weather data into the dashboard
 function loadSearchHistory() {
     var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
     searchHistoryListEl.innerHTML = "";
@@ -147,8 +148,6 @@ function loadSearchHistory() {
         searchHistoryListEl.prepend(searchHistoryListItemEl);
     }
 }
-
-
 
 loadSearchHistory();
 citySearchFormEl.addEventListener("submit", formSubmitHandler);

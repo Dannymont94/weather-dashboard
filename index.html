@@ -11,17 +11,22 @@
         <h1>Weather Dashboard</h1>
     </header>
     <main>
+        <!-- search column -->
         <section class="search-container">
+            <!-- search form -->
             <form id="city-search-form">
                 <label for="city-search" id="city-search-label">Search for a City:</label>
                 <input type="text" id="city-search-input" />
                 <button type="submit" id="city-search-btn">Search</button>
             </form>
+            <!-- search history -->
             <div>
                 <ul id="city-search-history"></ul>
             </div>
         </section>
+        <!-- forecast column -->
         <section id="forecast-container">
+            <!-- current forecast -->
             <div id="current-forecast-container">
                 <h2 id="city-and-date"></h2>
                 <div>
@@ -33,11 +38,10 @@
                 <p id="current-wind-speed"></p>
                 <p id="current-uvi"></p>
             </div>
+            <!-- five day forecast -->
             <div>
                 <h2>5-Day Forecast:</h2>
-                <div id="future-forecast-container">
-                  
-                </div>
+                <div id="future-forecast-container"></div>
             </div>
         </section>
     </main>
