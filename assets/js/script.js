@@ -1,3 +1,5 @@
+var citySearchFormEl = document.querySelector("#city-search-form");
+var citySearchInputEl = document.querySelector("#city-search-input");
 var cityAndDateEl = document.querySelector("#city-and-date");
 var currentForecastEl = document.querySelector("#current-forecast");
 var currentForecastIconEl = document.querySelector("#current-forecast-icon");
@@ -7,6 +9,11 @@ var currentWindSpeedEl = document.querySelector("#current-wind-speed");
 var currentUviEl = document.querySelector("#current-uvi");
 var futureForecastContainerEl = document.querySelector("#future-forecast-container");
 
+function formSubmitHandler(event) {
+    event.preventDefault();
+    var searchTerm = citySearchInputEl.value.trim();
+    getLocationData(searchTerm);
+}
 
 // get location data for city searched by user
 function getLocationData(searchTerm) {
@@ -53,7 +60,7 @@ function renderWeatherData(cityName, current, daily) {
     var currentHumidity = current.humidity + "%";
     var currentWindSpeed = current.wind_speed + " MPH";
     var currentUvi = current.uvi;
-    
+
     cityAndDateEl.textContent = cityName + " (" + currentDate + ")";
     currentForecastEl.textContent = "Forecast: " + currentForecast;
     currentForecastIconEl.setAttribute("src", currentForecastIcon);
@@ -62,14 +69,12 @@ function renderWeatherData(cityName, current, daily) {
     currentWindSpeedEl.textContent = "Wind Speed: " + currentWindSpeed;
     currentUviEl.textContent = "UV Index: " + currentUvi;
 
-
     // future weather data starts at daily[1] and only need 5 days of info. info needed: date, forecast icon, temp, humidity
     for (let i = 1; i < 6; i++) {
         var futureForecastDivEl = document.createElement("div");
         futureForecastDivEl.classList.add("future-forecast");
 
         var futureDate = convertDate(daily[i].dt);
-        var futureForecast = capitalizeWords(daily[i].weather[0].description);
         var futureForecastIcon = getIconUrl(daily[i].weather[0].icon);
         var futureTemp = daily[i].temp.day + String.fromCharCode(176) + "F";
         var futureHumidity = daily[i].humidity + "%";
@@ -91,7 +96,6 @@ function renderWeatherData(cityName, current, daily) {
         futureForecastDivEl.appendChild(futureHumidityEl);
 
         futureForecastContainerEl.appendChild(futureForecastDivEl);
-
     }
 }
 
@@ -113,4 +117,7 @@ function capitalizeWords(string) {
 
 // when page is loaded, turn city names in local storage into clickable elements that load data into the dashboard
 
-getLocationData("Miami");
+
+
+
+citySearchFormEl.addEventListener("submit", formSubmitHandler);
