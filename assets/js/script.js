@@ -25,11 +25,11 @@ function getLocationData(searchTerm) {
                     getWeatherData(data.name, data.coord.lat, data.coord.lon);
                 });
             } else {
-                console.log("(Error: " + response.statusText + ")");
+                cityAndDateEl.textContent = "(Error: " + response.statusText + ")";
             }
         })
         .catch(function(error) {
-            console.log("(Unable to connect to OpenWeatherMap's Current Weather Data Endpoint)");
+            cityAndDateEl.textContent = "(Unable to connect to OpenWeatherMap)";
         });
 }
 
@@ -42,11 +42,11 @@ function getWeatherData(cityName, lat, lon) {
                     renderWeatherData(cityName, current, daily);  
                 });
             } else {
-                console.log("(Error: " + response.statusText + ")");
+                cityAndDateEl.textContent = "(Error: " + response.statusText + ")";
             }
         })
         .catch(function(error) {
-            console.log("(Unable to connect to OpenWeatherMap's One Call API Endpoint)")
+            cityAndDateEl.textContent = "(Unable to connect to OpenWeatherMap)";
         });
 }
 
