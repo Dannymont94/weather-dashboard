@@ -22,29 +22,7 @@ function getWeatherData(cityName, lat, lon) {
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function({current, daily}) {
-                    // current weather data info needed: city name, date, forecast icon, temp, humidity, wind speed, and uv index
-                    console.log(
-                        "Today" + "\n" + 
-                        "City Name: " + cityName + "\n" + 
-                        "Today's Date: " + convertDate(current.dt) + "\n" + 
-                        "Forecast: " + capitalizeWords(current.weather[0].description) + "\n" + 
-                        "Forecast Icon URL: " + getIconUrl(current.weather[0].icon) + "\n" +
-                        "Temperature: " + current.temp + String.fromCharCode(176) + "F" + "\n" + 
-                        "Humidity: " + current.humidity + "%" + "\n" + 
-                        "Wind Speed: " + current.wind_speed + " MPH" + "\n" + 
-                        "UV Index: " + current.uvi
-                        );
-                    // future weather data starts at daily[1]. info needed: date, forecast icon, temp, humidity
-                    for (let i = 1; i < 6; i++) {
-                        console.log(
-                            [i] + " day(s) in the future" + "\n" + 
-                            "Date: " + convertDate(daily[i].dt) + "\n" + 
-                            "Forecast: " + capitalizeWords(daily[i].weather[0].description) + "\n" + 
-                            "Forecast Icon: " + getIconUrl(daily[i].weather[0].icon) + "\n" + 
-                            "Temperature: " + daily[i].temp.day + String.fromCharCode(176) + "F" + "\n" + 
-                            "Humidity: " + daily[i].humidity + "%" + "\n"
-                        );
-                    }
+                    renderWeatherData(cityName, current, daily);  
                 });
             } else {
                 console.log("(Error: " + response.statusText + ")");
@@ -53,6 +31,32 @@ function getWeatherData(cityName, lat, lon) {
         .catch(function(error) {
             console.log("(Unable to connect to OpenWeatherMap's One Call API Endpoint)")
         });
+}
+
+function renderWeatherData(cityName, current, daily) {
+    // current weather data info needed: city name, date, forecast icon, temp, humidity, wind speed, and uv index
+    console.log(
+        "Today" + "\n" + 
+        "City Name: " + cityName + "\n" + 
+        "Today's Date: " + convertDate(current.dt) + "\n" + 
+        "Forecast: " + capitalizeWords(current.weather[0].description) + "\n" + 
+        "Forecast Icon URL: " + getIconUrl(current.weather[0].icon) + "\n" +
+        "Temperature: " + current.temp + String.fromCharCode(176) + "F" + "\n" + 
+        "Humidity: " + current.humidity + "%" + "\n" + 
+        "Wind Speed: " + current.wind_speed + " MPH" + "\n" + 
+        "UV Index: " + current.uvi
+        );
+    // future weather data starts at daily[1]. info needed: date, forecast icon, temp, humidity
+    for (let i = 1; i < 6; i++) {
+        console.log(
+            [i] + " day(s) in the future" + "\n" + 
+            "Date: " + convertDate(daily[i].dt) + "\n" + 
+            "Forecast: " + capitalizeWords(daily[i].weather[0].description) + "\n" + 
+            "Forecast Icon: " + getIconUrl(daily[i].weather[0].icon) + "\n" + 
+            "Temperature: " + daily[i].temp.day + String.fromCharCode(176) + "F" + "\n" + 
+            "Humidity: " + daily[i].humidity + "%" + "\n"
+        );
+    }
 }
 
 function convertDate(timestamp) {
