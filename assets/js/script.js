@@ -26,25 +26,32 @@ function getWeatherData(city, lat, lon) {
             if (response.ok) {
                 response.json().then(function({current, daily}) {
                     console.log(current);
+                    // get date
+                    var date = new Date(current.dt * 1000);
+                    var formattedDate = date.toLocaleString().split(",")[0];            
                     // current weather data
                     console.log(
                         "CURRENT" + "\n" + 
                         "City Name: " + city  + "\n" + 
+                        "Date: " + formattedDate + "\n" + 
                         "Forecast: " + current.weather[0].main + "\n" + 
                         "Forecast Icon: " + current.weather[0].icon + "\n" +
                         "Temperature: " + current.temp + String.fromCharCode(176) + "F" + "\n" + 
                         "Humidity: " + current.humidity + "%" + "\n" + 
                         "Wind Speed: " + current.wind_speed + " MPH"
+                        );
+                    console.log(daily);
+                    // future weather data starts at daily[1]
+                    console.log(
+                        "FUTURE"
                     );
-                    // future weather data
-                    console.log("FUTURE")
                 });
             } else {
                 console.log("(Error: " + response.statusText + ")");
             }
         })
         .catch(function(error) {
-            console.log("(Unable to connect to OpenWeatherMap's One Call Endpoint)")
+            console.log("(Unable to connect to OpenWeatherMap's One Call API Endpoint)")
         });
 }
 
