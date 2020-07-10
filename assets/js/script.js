@@ -2,6 +2,7 @@ var citySearchFormEl = document.querySelector("#city-search-form");
 var citySearchInputEl = document.querySelector("#city-search-input");
 var searchHistoryListEl = document.querySelector("#city-search-history");
 var forecastContainerEl = document.querySelector(".forecast-container");
+var scrollDivEl = document.querySelector("#scroll-to-div");
 var cityAndDateEl = document.querySelector("#city-and-date");
 var currentForecastIconEl = document.querySelector("#current-forecast-icon");
 var currentTempEl = document.querySelector("#current-temp");
@@ -113,6 +114,8 @@ function renderWeatherData(cityName, current, daily) {
 
         futureForecastContainerEl.appendChild(futureForecastDivEl);
     }
+    scrollDivEl.scrollIntoView();
+
 }
 
 function renderUviColor(uvIndex) {

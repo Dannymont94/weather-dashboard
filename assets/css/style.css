@@ -5,46 +5,6 @@
     font-family: 'PT Sans', sans-serif;
 }
 
-li {
-    list-style: none;
-    background: white;
-    border: gray 1px solid;
-    padding: 15px;
-    cursor: pointer;
-}
-
-label {
-    font-size: 22px;
-    color: white;
-    display: block;
-}
-
-input {
-    padding: 8px;
-    font-size: 20px;
-    border-radius: 5px;
-}
-
-button {
-    display: block;
-    margin: 2px auto;
-    border: none;
-    border-radius: 5px;
-    width: 237.9px;
-    padding: 10px;
-    font-size: 15px;
-    background: rgb(36, 87, 228);
-    color: white;
-}
-
-button:hover {
-    background: rgb(6, 63, 221);
-}
-
-.current-uvi {
-    display: flex;
-}
-
 header {
     background: rgb(54, 50, 50);
     color: white;
@@ -70,6 +30,42 @@ main {
 
 .search-form {
     margin-bottom: 25px;
+}
+
+.search-form label {
+    font-size: 22px;
+    color: white;
+    display: block;
+}
+
+.search-form input {
+    padding: 8px;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.search-form button {
+    display: block;
+    margin: 2px auto;
+    border: none;
+    border-radius: 5px;
+    width: 237.9px;
+    padding: 10px;
+    font-size: 15px;
+    background: rgb(36, 87, 228);
+    color: white;
+}
+
+button:hover {
+    background: rgb(6, 63, 221);
+}
+
+.search-history li {
+    list-style: none;
+    background: white;
+    border: gray 1px solid;
+    padding: 15px;
+    cursor: pointer;
 }
 
 .search-history li:first-child {
@@ -101,7 +97,11 @@ main {
     font-size: 20px;
 }
 
-.current-forecast-container span {
+.current-uvi {
+    display: flex;
+}
+
+.current-uvi span {
     font-size: 20px;
     padding: 8px;
     margin-left: 5px;
@@ -112,15 +112,15 @@ main {
     margin-top: 10px;
 }
 
+.future-forecast-wrapper h2 {
+    padding-left: 10px;
+}
+
 .future-forecast-container {
     display: flex;
     justify-content: space-evenly;
     flex-flow: row wrap;
     margin-bottom: 15px;
-}
-
-#future-forecast-title {
-    padding-left: 10px;
 }
 
 .future-forecast {
@@ -138,4 +138,60 @@ main {
 
 .future-forecast p:last-child {
     padding-top: 15px;
+}
+
+@media screen and (max-width:1210px) {
+    main {
+        display: block;
+    }
+
+    .search-form button {
+        display: inline-block;
+        font-size: 20px;
+    }
+
+    .forecast-container {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .current-forecast-container {
+        margin-top: 15px;
+
+    }
+
+    .current-forecast-container h2 {
+        font-size: 35px;
+    }
+
+    .current-uvi {
+        justify-content: center;
+    }
+
+    .future-forecast-wrapper h2 {
+        padding-left: 0;
+        font-size: 28px;
+    }
+
+    .future-forecast-container {
+        display: block;
+    }
+    
+    .future-forecast h3 {
+        font-size: 25px;
+    }
+
+    .future-forecast p {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:610px) {
+    .search-form input {
+        width: 100%;
+    }
+
+    .search-form button {
+        width: 100%;
+    }
 }
