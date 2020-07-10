@@ -54,9 +54,10 @@ main {
     font-size: 15px;
     background: rgb(36, 87, 228);
     color: white;
+    cursor: pointer;
 }
 
-button:hover {
+.search-form button:hover {
     background: rgb(6, 63, 221);
 }
 
@@ -113,7 +114,7 @@ button:hover {
 }
 
 .future-forecast-wrapper h2 {
-    padding-left: 10px;
+    padding-left: 25px;
 }
 
 .future-forecast-container {
