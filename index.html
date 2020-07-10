@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <title>Weather Dashboard</title>
 </head>
 <body>
@@ -29,10 +30,7 @@
             <!-- current forecast -->
             <div id="current-forecast-container" class="current-forecast-container">
                 <h2 id="city-and-date"></h2>
-                <div>
-                    <h3 id="current-forecast"></h3>
-                    <img id="current-forecast-icon" />
-                </div>
+                <img id="current-forecast-icon" />
                 <p id="current-temp"></p>
                 <p id="current-humidity"></p>
                 <p id="current-wind-speed"></p>
@@ -43,7 +41,7 @@
             </div>
             <!-- five day forecast -->
             <div>
-                <h2>5-Day Forecast:</h2>
+                <h2 id="future-forecast-title"></h2>
                 <div id="future-forecast-container" class="future-forecast-container"></div>
             </div>
         </section>

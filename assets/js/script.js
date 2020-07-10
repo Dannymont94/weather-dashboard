@@ -2,7 +2,6 @@ var citySearchFormEl = document.querySelector("#city-search-form");
 var citySearchInputEl = document.querySelector("#city-search-input");
 var searchHistoryListEl = document.querySelector("#city-search-history");
 var cityAndDateEl = document.querySelector("#city-and-date");
-var currentForecastEl = document.querySelector("#current-forecast");
 var currentForecastIconEl = document.querySelector("#current-forecast-icon");
 var currentTempEl = document.querySelector("#current-temp");
 var currentHumidityEl = document.querySelector("#current-humidity");
@@ -10,6 +9,7 @@ var currentWindSpeedEl = document.querySelector("#current-wind-speed");
 var currentUviPEl = document.querySelector("#current-uvi-p");
 var currentUviSpanEl = document.querySelector("#current-uvi-span");
 var futureForecastContainerEl = document.querySelector("#future-forecast-container");
+var futureForecastTitleEl = document.querySelector("#future-forecast-title");
 
 function formSubmitHandler(event) {
     event.preventDefault();
@@ -62,7 +62,7 @@ function getWeatherData(cityName, lat, lon) {
 function renderWeatherData(cityName, current, daily) {
     // current weather data info needed: city name, date, forecast icon, temp, humidity, wind speed, and uv index
     var currentDate = convertDate(current.dt);
-    var currentForecast = capitalizeWords(current.weather[0].description);
+    var currentForecast = current.weather[0].description;
     var currentForecastIcon = getIconUrl(current.weather[0].icon);
     var currentTemp = current.temp + String.fromCharCode(176) + "F";
     var currentHumidity = current.humidity + "%";
@@ -70,8 +70,8 @@ function renderWeatherData(cityName, current, daily) {
     var currentUvi = current.uvi;
 
     cityAndDateEl.textContent = cityName + " (" + currentDate + ")";
-    currentForecastEl.textContent = "Forecast: " + currentForecast;
     currentForecastIconEl.setAttribute("src", currentForecastIcon);
+    currentForecastIconEl.setAttribute("alt", `Forecast is ${currentForecast}`)
     currentTempEl.textContent = "Temperature: " + currentTemp;
     currentHumidityEl.textContent = "Humidity: " + currentHumidity;
     currentWindSpeedEl.textContent = "Wind Speed: " + currentWindSpeed;
@@ -81,11 +81,13 @@ function renderWeatherData(cityName, current, daily) {
 
     // future weather data starts at daily[1]. dashboard only loads 5 days of info. info needed: date, forecast icon, temp, humidity
     futureForecastContainerEl.innerHTML = "";
+    futureForecastTitleEl.textContent = "5-Day Forecast:";
     for (let i = 1; i < 6; i++) {
         var futureForecastDivEl = document.createElement("div");
         futureForecastDivEl.classList.add("future-forecast");
 
         var futureDate = convertDate(daily[i].dt);
+        var futureForecast = daily[i].weather[0].description;
         var futureForecastIcon = getIconUrl(daily[i].weather[0].icon);
         var futureTemp = daily[i].temp.day + String.fromCharCode(176) + "F";
         var futureHumidity = daily[i].humidity + "%";
@@ -96,6 +98,7 @@ function renderWeatherData(cityName, current, daily) {
 
         var futureForecastIconEl = document.createElement("img");
         futureForecastIconEl.setAttribute("src", futureForecastIcon);
+        futureForecastIconEl.setAttribute("alt", `Forecast is ${futureForecast}`);
         futureForecastDivEl.appendChild(futureForecastIconEl);
 
         var futureTempEl = document.createElement("p");
@@ -133,13 +136,6 @@ function convertDate(timestamp) {
 
 function getIconUrl(iconCode){
     return "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
-}
-
-// capitalizes the first letter of each word in a string
-function capitalizeWords(string) {
-    return string.replace(/\w\S*/g, function(text){
-        return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
-    });
 }
 
 // when a city is searched, save in localStorage and add to search history. search history filters out duplicates and holds up to 10 city names.
