@@ -1,6 +1,7 @@
 var citySearchFormEl = document.querySelector("#city-search-form");
 var citySearchInputEl = document.querySelector("#city-search-input");
 var searchHistoryListEl = document.querySelector("#city-search-history");
+var forecastContainerEl = document.querySelector(".forecast-container");
 var cityAndDateEl = document.querySelector("#city-and-date");
 var currentForecastIconEl = document.querySelector("#current-forecast-icon");
 var currentTempEl = document.querySelector("#current-temp");
@@ -60,6 +61,7 @@ function getWeatherData(cityName, lat, lon) {
 
 // render all the data from previous functions onto the page
 function renderWeatherData(cityName, current, daily) {
+    forecastContainerEl.setAttribute("style", "display:flex");
     // current weather data info needed: city name, date, forecast icon, temp, humidity, wind speed, and uv index
     var currentDate = convertDate(current.dt);
     var currentForecast = current.weather[0].description;
@@ -114,7 +116,6 @@ function renderWeatherData(cityName, current, daily) {
 }
 
 function renderUviColor(uvIndex) {
-    console.log(uvIndex);
     if (uvIndex <= 2) {
         // set green background if low uv index
         currentUviSpanEl.setAttribute("style", "background:rgb(95, 194, 71)");

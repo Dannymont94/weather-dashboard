@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Weather Dashboard</title>
 </head>
+
 <body>
     <header>
         <h1>Weather Dashboard</h1>
@@ -15,14 +17,14 @@
         <!-- search column -->
         <section class="search-container">
             <!-- search form -->
-            <form id="city-search-form">
-                <label for="city-search" id="city-search-label">Search for a City:</label>
-                <input type="text" id="city-search-input" />
+            <form id="city-search-form" class="search-form">
+                <label for="city-search-input" id="city-search-label">Search by City:</label>
+                <input type="text" id="city-search-input" required/>
                 <button type="submit" id="city-search-btn">Search</button>
             </form>
             <!-- search history -->
             <div>
-                <ul id="city-search-history"></ul>
+                <ul id="city-search-history" class="search-history"></ul>
             </div>
         </section>
         <!-- forecast column -->
@@ -40,7 +42,7 @@
                 </div>
             </div>
             <!-- five day forecast -->
-            <div>
+            <div class="future-forecast-wrapper">
                 <h2 id="future-forecast-title"></h2>
                 <div id="future-forecast-container" class="future-forecast-container"></div>
             </div>
@@ -48,4 +50,5 @@
     </main>
     <script src="./assets/js/script.js"></script>
 </body>
+
 </html>
