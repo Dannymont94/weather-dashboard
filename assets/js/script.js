@@ -7,7 +7,8 @@ var currentForecastIconEl = document.querySelector("#current-forecast-icon");
 var currentTempEl = document.querySelector("#current-temp");
 var currentHumidityEl = document.querySelector("#current-humidity");
 var currentWindSpeedEl = document.querySelector("#current-wind-speed");
-var currentUviEl = document.querySelector("#current-uvi");
+var currentUviPEl = document.querySelector("#current-uvi-p");
+var currentUviSpanEl = document.querySelector("#current-uvi-span");
 var futureForecastContainerEl = document.querySelector("#future-forecast-container");
 
 function formSubmitHandler(event) {
@@ -74,7 +75,9 @@ function renderWeatherData(cityName, current, daily) {
     currentTempEl.textContent = "Temperature: " + currentTemp;
     currentHumidityEl.textContent = "Humidity: " + currentHumidity;
     currentWindSpeedEl.textContent = "Wind Speed: " + currentWindSpeed;
-    currentUviEl.textContent = "UV Index: " + currentUvi;
+    currentUviPEl.textContent = "UV Index:";
+    currentUviSpanEl.textContent = currentUvi;
+    renderUviColor(currentUvi);
 
     // future weather data starts at daily[1]. dashboard only loads 5 days of info. info needed: date, forecast icon, temp, humidity
     futureForecastContainerEl.innerHTML = "";
@@ -105,6 +108,23 @@ function renderWeatherData(cityName, current, daily) {
 
         futureForecastContainerEl.appendChild(futureForecastDivEl);
     }
+}
+
+function renderUviColor(uvIndex) {
+    console.log(uvIndex);
+    if (uvIndex <= 2) {
+        // set green background if low uv index
+        currentUviSpanEl.setAttribute("style", "background:rgb(95, 194, 71)");
+    } else if (uvIndex < 4.5) {
+        // set yellow background if moderate uv index
+        currentUviSpanEl.setAttribute("style", "background:rgb(247,228,1)");
+    } else if (uvIndex < 8) {
+        // set orange background if high uv index
+        currentUviSpanEl.setAttribute("style", "background:rgb(249,89,1)");
+        // set red background if extreme uv index
+    } else {
+        currentUviSpanEl.setAttribute("style", "background:rgb(217,0,17)");
+    } 
 }
 
 function convertDate(timestamp) {
